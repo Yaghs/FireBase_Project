@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.csc325_firebase_webview_auth.view.SignUpController">
+   <children>
+      <Text layoutX="131.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username: " wrappingWidth="107.13671875">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text layoutX="131.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text layoutX="95.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Button fx:id="SignUpButton" layoutX="247.0" layoutY="262.0" mnemonicParsing="false" onAction="#handleSignUpAction" prefHeight="48.0" prefWidth="107.0" text="Sign Up" />
+      <TextField fx:id="UserName" layoutX="262.0" layoutY="70.0" prefHeight="32.0" prefWidth="185.0" />
+      <PasswordField fx:id="PasswordField" layoutX="262.0" layoutY="136.0" prefHeight="32.0" prefWidth="185.0" />
+      <PasswordField fx:id="ConfirmPassword" layoutX="262.0" layoutY="193.0" prefHeight="32.0" prefWidth="185.0" />
+      <Text fill="RED" layoutX="262.0" layoutY="60.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Username" />
+      <Text fx:id="InvalidPassword" fill="RED" layoutX="262.0" layoutY="131.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Password" />
+      <Text fx:id="InvalidConfirmPassword" fill="RED" layoutX="262.0" layoutY="189.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Password" />
+      <Text fx:id="RegistrationError" fill="RED" layoutX="251.0" layoutY="339.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Failed" />
+   </children>
+</AnchorPane>
