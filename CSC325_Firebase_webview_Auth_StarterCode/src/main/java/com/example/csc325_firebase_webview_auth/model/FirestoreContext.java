@@ -16,15 +16,13 @@ public class FirestoreContext {
     public Firestore firebase() {
         try {
             FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(getClass().getResourceAsStream("/files/key.json")))
-                    .build();
+                    .setCredentials(GoogleCredentials.fromStream(getClass().getResourceAsStream("key.json")))
+                    .setStorageBucket("gs://csc325yaghinlooweek6demo1.appspot.com")
+                            .build();
             FirebaseApp.initializeApp(options);
-            System.out.println("Firebase is initialized");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         return FirestoreClient.getFirestore();
     }
-
-
 }

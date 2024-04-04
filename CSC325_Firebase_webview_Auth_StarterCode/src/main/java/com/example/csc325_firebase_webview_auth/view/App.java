@@ -2,9 +2,14 @@ package com.example.csc325_firebase_webview_auth.view;
 
 import com.example.csc325_firebase_webview_auth.model.FirestoreContext;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.storage.Bucket;
 import com.google.firebase.auth.FirebaseAuth;
-import java.io.IOException;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import com.google.firebase.cloud.StorageClient;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -30,9 +35,16 @@ public class App extends Application {
         fstore = contxtFirebase.firebase();
         fauth = FirebaseAuth.getInstance();
 
+        StorageClient storageClient = StorageClient.getInstance();
+        Bucket bucket = storageClient.bucket();
+        InputStream testFile = new FileInputStream(App.class.getResource("mikunnn.mp4").getFile());
+        String blobString = "NEW_FOLDER/" + "mikunnn.mp4";
+
+        bucket.create(blobString, testFile, bucket.toString() );
+
         // Load and display the splash screen initially
         scene = new Scene(loadFXML("/files/splashscreen.fxml"));
-        scene.getStylesheets().add("/files/style.css");
+        scene.getStylesheets().add("/files/StyleSheet.css");
         primaryStage.setScene(scene);
         primaryStage.show();
 

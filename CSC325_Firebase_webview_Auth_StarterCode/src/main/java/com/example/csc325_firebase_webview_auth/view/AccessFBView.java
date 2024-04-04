@@ -158,36 +158,6 @@ public class AccessFBView {
         }
 
     }
+
 }
-    /*@FXML
-    private void selectPicture(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
-        File selectedFile = fileChooser.showOpenDialog(null);
-        if (selectedFile != null) {
-            uploadPicture(selectedFile);
-        }
-    }
-    public void uploadPicture(File file) {
-        String path = "images/" + UUID.randomUUID() + "-" + file.getName();
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference(path);
-        try {
-            byte[] bytes = Files.readAllBytes(file.toPath());
-            storageRef.putBytes(bytes).addOnSuccessListener(taskSnapshot -> {
-                // Handle successful upload, e.g., getting the URL
-                storageRef.getDownloadUrl().addOnSuccessListener(downloadUrl -> {
-                    System.out.println("Upload success. File URL: " + downloadUrl.toString());
-                    // Optionally, update the ImageView with the new image
-                    Image image = new Image(downloadUrl.toString());
-                    ImageProfile.setImage(image);
-                });
-            }).addOnFailureListener(e -> {
-                // Handle unsuccessful uploads
-                e.printStackTrace();
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}*/
+
