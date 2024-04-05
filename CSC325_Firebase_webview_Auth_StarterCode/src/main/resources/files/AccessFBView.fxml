@@ -23,13 +23,13 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem fx:id="menuItem" mnemonicParsing="false" onAction="#GoToSignUp" text="Register" />
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="menuItemRegister" mnemonicParsing="false" onAction="#GoToSignUp" text="Register" />
+              <MenuItem fx:id="CloseMenuItem" mnemonicParsing="false" onAction="#CloseApplication" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false" onAction="#deleteRecord" text="Delete" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

@@ -3,23 +3,18 @@ package com.example.csc325_firebase_webview_auth.view;//package modelview;
 import com.example.csc325_firebase_webview_auth.model.Person;
 import com.example.csc325_firebase_webview_auth.viewmodel.AccessDataViewModel;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -60,7 +55,11 @@ public class AccessFBView {
     @FXML
     private TableColumn<Person, Integer> AgeColumn;
     @FXML
-    private MenuItem menuItem;
+    private MenuItem menuItemRegister;
+    @FXML
+    private MenuItem deleteMenuItem;
+    @FXML
+    private MenuItem closeMenuItem;
 
 
     private boolean key;
@@ -77,7 +76,8 @@ public class AccessFBView {
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         MajorColumn.setCellValueFactory(new PropertyValueFactory<>("major"));
         AgeColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
-
+        OutPutView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        listOfUsers = FXCollections.observableArrayList();
         OutPutView.setItems(listOfUsers);
     }
 
@@ -200,23 +200,7 @@ public class AccessFBView {
         }
 
     }
-    /*@FXML
-    private void GoToSignUp(){
-        try {
-            // Load the SignUp.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/SignUp.fxml"));
-            Parent root = loader.load();
 
-            // Get the current stage (window) from any control, like the LogIn button, and set the scene
-            Stage stage = (Stage) writeButton.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Handle the exception, maybe log it or show an error message
-        }
-    }*/
     @FXML
     private void GoToSignUp(ActionEvent event) {
         try {
@@ -225,9 +209,9 @@ public class AccessFBView {
             Parent root = loader.load();
 
             // Get the source of the event, which is the MenuItem
-            MenuItem menuItem = (MenuItem) event.getSource();
+            MenuItem menuItemRegister = (MenuItem) event.getSource();
             // Then get the Scene and Window from any Node within the Scene, but first, we need to get a reference to a Node
-            Scene scene = menuItem.getParentPopup().getOwnerWindow().getScene();
+            Scene scene = menuItemRegister.getParentPopup().getOwnerWindow().getScene();
             // Assuming we successfully retrieved the Scene, get the Stage from the Scene
             Stage stage = (Stage) scene.getWindow();
 
@@ -239,7 +223,14 @@ public class AccessFBView {
             // Handle the exception, maybe log it or show an error message
         }
     }
+    @FXML
+    private void CloseApplication(){
+        Platform.exit();
+    }
+    @FXML
+    public void deleteRecord() {
 
+    }
 
 
 

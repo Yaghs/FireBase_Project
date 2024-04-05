@@ -32,5 +32,6 @@
       <Text fx:id="InvalidPassword" fill="RED" layoutX="262.0" layoutY="131.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Password" />
       <Text fx:id="InvalidConfirmPassword" fill="RED" layoutX="262.0" layoutY="189.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Password" />
       <Text fx:id="RegistrationError" fill="RED" layoutX="251.0" layoutY="339.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Failed" />
+      <Button fx:id="ReturnToLoginButton" layoutX="247.0" layoutY="326.0" mnemonicParsing="false" onAction="#GoToLogIn" prefHeight="48.0" prefWidth="107.0" text="Return To Log in" />
    </children>
 </AnchorPane>

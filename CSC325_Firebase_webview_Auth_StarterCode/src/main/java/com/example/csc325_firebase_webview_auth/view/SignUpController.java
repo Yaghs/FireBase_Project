@@ -33,6 +33,8 @@ public class SignUpController {
     private Text RegistrationError;
     @FXML
     private Button SignUpButton;
+    @FXML
+    private Button ReturnToLoginButton;
 
     private static final Pattern USERNAME_PATTERN = Pattern.compile("^[A-Za-z0-9_-]{3,16}$");
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^.{6,18}$");
@@ -96,6 +98,23 @@ public class SignUpController {
             stage.setScene(new Scene(root));
             stage.show();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception, maybe log it or show an error message
+        }
+    }
+    @FXML
+    private void GoToLogIn(){
+        try {
+            // Load the SignUp.fxml file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/LogIn.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage (window) from any control, like the LogIn button, and set the scene
+            Stage stage = (Stage) ReturnToLoginButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
             // Handle the exception, maybe log it or show an error message
