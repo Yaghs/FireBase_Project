@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -18,16 +19,20 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class AccessFBView {
 
@@ -47,7 +52,17 @@ public class AccessFBView {
     @FXML
     private ImageView ImageProfile;
     @FXML
-    private TableView OutPutView;
+    private TableView <Person> OutPutView;
+    @FXML
+    private TableColumn<Person, String> NameColumn;
+    @FXML
+    private TableColumn<Person, String> MajorColumn;
+    @FXML
+    private TableColumn<Person, Integer> AgeColumn;
+    @FXML
+    private MenuItem menuItem;
+
+
     private boolean key;
     private ObservableList<Person> listOfUsers = FXCollections.observableArrayList();
     private Person person;
@@ -57,11 +72,13 @@ public class AccessFBView {
     }
 
     void initialize() {
+        // Other initialization code...
 
-        AccessDataViewModel accessDataViewModel = new AccessDataViewModel();
-        nameField.textProperty().bindBidirectional(accessDataViewModel.userNameProperty());
-        majorField.textProperty().bindBidirectional(accessDataViewModel.userMajorProperty());
-        writeButton.disableProperty().bind(accessDataViewModel.isWritePossibleProperty().not());
+        NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        MajorColumn.setCellValueFactory(new PropertyValueFactory<>("major"));
+        AgeColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
+
+        OutPutView.setItems(listOfUsers);
     }
 
     @FXML
@@ -85,15 +102,30 @@ public class AccessFBView {
     }
 
     public void addData() {
-
+        // First, add to Firestore as you're already doing
         DocumentReference docRef = App.fstore.collection("References").document(UUID.randomUUID().toString());
-
         Map<String, Object> data = new HashMap<>();
         data.put("Name", nameField.getText());
         data.put("Major", majorField.getText());
         data.put("Age", Integer.parseInt(ageField.getText()));
-        //asynchronously write data
+
+        // Asynchronously write data to Firestore
         ApiFuture<WriteResult> result = docRef.set(data);
+
+        // Now, update the TableView
+        String name = nameField.getText();
+        String major = majorField.getText();
+        int age = Integer.parseInt(ageField.getText());
+
+        // Create a new Person object
+        Person newPerson = new Person(name, major, age);
+
+        // Add this Person to the list backing the TableView
+        listOfUsers.add(newPerson);
+
+        // Ensure your TableView is set to use listOfUsers as its item source
+        // This line should be somewhere in your initialization code if it's not already
+        OutPutView.setItems(listOfUsers);
     }
 
     public boolean readFirebase() {
@@ -117,7 +149,17 @@ public class AccessFBView {
                             Integer.parseInt(document.getData().get("Age").toString()));
                     listOfUsers.add(person);
                 }
-            } else {
+                NameColumn.setCellValueFactory(
+                        new PropertyValueFactory<Person,String>("name"));
+                MajorColumn.setCellValueFactory(
+                        new PropertyValueFactory<Person, String>("Major"));
+                AgeColumn.setCellValueFactory(
+                        new PropertyValueFactory<Person, Integer>("Age"));
+                ObservableList<Person> ListPeople = OutPutView.getItems();
+                ListPeople.addAll(listOfUsers);
+            }
+
+            else {
                 System.out.println("No data");
             }
             key = true;
@@ -158,6 +200,48 @@ public class AccessFBView {
         }
 
     }
+    /*@FXML
+    private void GoToSignUp(){
+        try {
+            // Load the SignUp.fxml file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/SignUp.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage (window) from any control, like the LogIn button, and set the scene
+            Stage stage = (Stage) writeButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception, maybe log it or show an error message
+        }
+    }*/
+    @FXML
+    private void GoToSignUp(ActionEvent event) {
+        try {
+            // Load the SignUp.fxml file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/files/SignUp.fxml"));
+            Parent root = loader.load();
+
+            // Get the source of the event, which is the MenuItem
+            MenuItem menuItem = (MenuItem) event.getSource();
+            // Then get the Scene and Window from any Node within the Scene, but first, we need to get a reference to a Node
+            Scene scene = menuItem.getParentPopup().getOwnerWindow().getScene();
+            // Assuming we successfully retrieved the Scene, get the Stage from the Scene
+            Stage stage = (Stage) scene.getWindow();
+
+            // Set the new Scene on the Stage
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception, maybe log it or show an error message
+        }
+    }
+
+
+
 
 }
 

@@ -37,14 +37,14 @@ public class App extends Application {
 
         StorageClient storageClient = StorageClient.getInstance();
         Bucket bucket = storageClient.bucket();
-        InputStream testFile = new FileInputStream(App.class.getResource("mikunnn.mp4").getFile());
-        String blobString = "NEW_FOLDER/" + "mikunnn.mp4";
 
-        bucket.create(blobString, testFile, bucket.toString() );
+        String blobString = "NEW_FOLDER/" + "files/Images/fsc.png";
+
+        bucket.create(blobString, App.class.getResourceAsStream("files/Images/fsc.png"), bucket.toString() );
 
         // Load and display the splash screen initially
         scene = new Scene(loadFXML("/files/splashscreen.fxml"));
-        scene.getStylesheets().add("/files/StyleSheet.css");
+
         primaryStage.setScene(scene);
         primaryStage.show();
 

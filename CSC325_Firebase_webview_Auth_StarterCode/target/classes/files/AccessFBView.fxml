@@ -23,7 +23,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Register" />
+                  <MenuItem fx:id="menuItem" mnemonicParsing="false" onAction="#GoToSignUp" text="Register" />
               <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
@@ -62,8 +62,9 @@
                   <TextArea fx:id="outputField" prefHeight="184.0" prefWidth="514.0" />
                   <TableView fx:id="OutPutView" prefHeight="351.0" prefWidth="514.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn fx:id="NameColumn" prefWidth="75.0" text="Name" />
+                      <TableColumn fx:id="MajorColumn" prefWidth="75.0" text="Major" />
+                        <TableColumn fx:id="AgeColumn" prefWidth="75.0" text="Age" />
                     </columns>
                   </TableView>
                </children>

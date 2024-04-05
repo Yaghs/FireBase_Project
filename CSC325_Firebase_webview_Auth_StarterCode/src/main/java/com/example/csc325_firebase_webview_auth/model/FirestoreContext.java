@@ -12,17 +12,24 @@ import java.io.IOException;
  * @author MoaathAlrajab
  */
 public class FirestoreContext {
+    public FirestoreContext() {
+    }
 
     public Firestore firebase() {
         try {
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(getClass().getResourceAsStream("key.json")))
-                    .setStorageBucket("gs://csc325yaghinlooweek6demo1.appspot.com")
-                            .build();
-            FirebaseApp.initializeApp(options);
+            if (FirebaseApp.getApps().isEmpty()) { // If no FirebaseApp initialized
+                FirebaseOptions options = new FirebaseOptions.Builder()
+                        .setCredentials(GoogleCredentials.fromStream(getClass().getResourceAsStream("/files/key.json")))
+                        .setStorageBucket("csc325yaghinlooweek6demo1.appspot.com")
+                        .setProjectId("csc325yaghinlooweek6demo1") // Ensure this matches your Firebase project ID
+                        .build();
+                FirebaseApp.initializeApp(options);
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
+            throw new RuntimeException("Failed to initialize FirebaseApp", ex);
         }
         return FirestoreClient.getFirestore();
     }
+
 }
